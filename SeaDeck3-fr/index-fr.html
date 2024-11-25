@@ -1,0 +1,278 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+
+  <title>Stormshot: Isle of Adventure</title>
+
+  <!--http://www.html5rocks.com/en/mobile/mobifying/-->
+  <meta name="viewport"
+    content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1" />
+
+  <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- force webkit on 360 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <!-- force edge on IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <!-- force full screen on some browser -->
+  <meta name="full-screen" content="yes" />
+  <meta name="x5-fullscreen" content="true" />
+  <meta name="360-fullscreen" content="true" />
+
+  <!-- force screen orientation on some browser -->
+  <meta name="screen-orientation" content="" />
+  <meta name="x5-orientation" content="" />
+
+  <!--fix fireball/issues/3568 -->
+  <!--<meta name="browsermode" content="application">-->
+  <meta name="x5-page-mode" content="app" />
+
+  <!--<link rel="apple-touch-icon" href=".png" />-->
+  <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+
+  <link rel="stylesheet" type="text/css" href="style-mobile.css" />
+  <link rel="icon" href="favicon.ico" />
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        "gtm.start": new Date().getTime(),
+        event: "gtm.js",
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-W8WPJWM");
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.project = "st";
+    let lang = "en";
+    if (location.href.indexOf("-ru") > -1) {
+      lang = "ru";
+    } else if (location.href.indexOf("-jp") > -1) {
+      lang = "jp";
+    }else if (location.href.indexOf("-fr") > -1) {
+      lang = "fr";
+    }else if (location.href.indexOf("-de") > -1) {
+      lang = "de";
+    }
+    window.page_id = "playable-1-" + lang;
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    // Setup default Cookie Consent
+    gtag("consent", "default", {
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+      analytics_storage: "granted",
+    });
+    gtag("consent", "default", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "denied",
+      region: [
+        "BE",
+        "EL",
+        "LT",
+        "PT",
+        "BG",
+        "ES",
+        "LU",
+        "RO",
+        "CZ",
+        "FR",
+        "HU",
+        "SI",
+        "DK",
+        "HR",
+        "MT",
+        "SK",
+        "DE",
+        "IT",
+        "NL",
+        "FI",
+        "EE",
+        "CY",
+        "AT",
+        "SE",
+        "IE",
+        "LV",
+        "PL",
+        "NO",
+        "IS",
+        "LI",
+      ],
+    });
+  </script>
+</head>
+
+<body>
+  <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
+  <div id="splash">
+    <img id="logo" src="./logo.png" />
+    <div class="progress-bar stripes">
+      <span style="width: 0%"></span>
+    </div>
+  </div>
+  <a id="download-btn" style="display: none;"><a>
+      <div id="cookie-modal" class="w-screen h-screen flex justify-center items-center fixed top-0 left-0 z-30"
+        style="display: none">
+        <div id="cookie-banner" style="background-image: './bg-cookie.png'"
+          class="w-[640px] bg-cover bg-no-repeat p-8 text-xl text-[#1D1D1D] relative">
+          <div id="modal-close" class="cursor-pointer absolute right-12 top-8">
+            <img src="./modal-close.png" alt="close" />
+          </div>
+          <h3 class="text-center text-3xl pb-4">Customize cookies</h3>
+          <p class="h-48 overflow-auto leading-normal">
+            When you visit our website, your browser may store or retrieve
+            information in the form of cookies. These cookies are primarily used
+            for the basic functioning of the website and for capabilities that
+            offer personalized services. You can choose to disable or enable
+            certain types of cookies according to your needs. Please review the
+            descriptions of each cookie category and set them according to your
+            preferences. Note that some cookies are essential and cannot be
+            disabled; other types of cookies may affect your user experience or
+            the services we offer, so please choose wisely.
+          </p>
+
+          <div class="settings">
+            <div class="cookie-item necessary px-4 border-y border-gray-400 mt-8 py-4">
+              <div class="cookie-title flex justify-between">
+                <div>
+                  <p class="font-semibold inline-block">Necessary Cookie</p>
+                  <img class="inline-block ml-2 cursor-pointer" src="./detail.png" alt="" />
+                </div>
+                <input type="checkbox" id="necessary" checked disabled />
+                <label for="necessary">Toggle</label>
+              </div>
+              <div class="cookie-intro text-base mt-2 transition-all ease-in-out" style="display: none">
+                This category of Cookie is related to the basic service
+                functionality of the website and must be obtained to ensure the
+                operation of the website; therefore, consent is mandatory, please
+                understand.
+              </div>
+            </div>
+            <div class="cookie-item analytics px-4 border-b border-gray-400 mt-6 pb-4">
+              <div class="cookie-title flex justify-between">
+                <div>
+                  <p class="font-semibold inline-block">Maketing Cookie</p>
+                  <img class="inline-block ml-2 cursor-pointer" src="./detail.png" alt="" />
+                </div>
+                <input type="checkbox" id="analytics" />
+                <label for="analytics">Toggle</label>
+              </div>
+              <div class="cookie-intro text-base mt-2" style="display: none">
+                This type of Cookie is primarily used for marketing activities,
+                helping us to understand your behavioral interests so that we can
+                provide you with personalized services.
+              </div>
+            </div>
+          </div>
+
+          <div class="btns mt-12 flex justify-around">
+            <a href="javascript:;"
+              class="cookie-confirm text-center mr-2 px-12 py-4 rounded-lg border-fp border text-fp">
+              Confirm current selection
+            </a>
+            <a href="javascript:;"
+              class="accept-all text-center ml-2 px-12 py-4 rounded-lg border-fp border bg-fp text-white">
+              Accept all Cookies
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="cookie-notice" class="w-screen h-screen flex justify-center items-center fixed top-0 left-0 z-30"
+        style="display: none">
+        <div class="bg-opacity-80 bg-gray-900 text-[#E2E2E2] p-4 rounded-lg">
+          Your settings have been saved, come download the game now~
+        </div>
+      </div>
+
+      <footer id="cookie-footer" class="absolute bottom-0 z-10 w-full" style="display: none">
+        <div
+          class="bg-black bg-opacity-50 w-full max-w-[1200px] mx-auto flex justify-between items-center px-8 py-6 rounded-t-lg text-base leading-tight text-white">
+          <div class="w-1/2">
+            <p>
+              <a href="https://funplus.com/privacy-policy/" target="_blank" style="color: #ddb463"></a>
+              <a href="https://funplus.com/terms-conditions/" target="_blank" style="color: #ddb463"></a>
+            </p>
+          </div>
+          <div class="btns flex">
+            <a href="javascript:;" class="accept-all text-center px-8 py-4 ml-8 rounded-lg border-fp border bg-fp">
+              Accept all cookies
+            </a>
+            <a href="javascript:;" id="cookie-config"
+              class="text-center px-8 py-4 ml-8 rounded-lg border-fp border text-fp">
+              Customize cookies
+            </a>
+          </div>
+        </div>
+      </footer>
+
+      <script src="./sdk/md5.min.js"></script>
+      <script type="module" src="./sdk/axios.min.js"></script>
+      <script type="module" src="./sdk/helpers.js"></script>
+      <script type="module" src="./sdk/cookie.js"></script>
+      <script type="module" src="./sdk/theme.js"></script>
+
+      <script src="src/settings.js" charset="utf-8"></script>
+
+      <script src="main.js" charset="utf-8"></script>
+
+      <script type="text/javascript">
+        (function () {
+          // open web debugger console
+          if (typeof VConsole !== "undefined") {
+            window.vConsole = new VConsole();
+          }
+
+          var debug = window._CCSettings.debug;
+          var splash = document.getElementById("splash");
+          splash.style.display = "block";
+
+          function loadScript(moduleName, cb) {
+            function scriptLoaded() {
+              document.body.removeChild(domScript);
+              domScript.removeEventListener("load", scriptLoaded, false);
+              cb && cb();
+            }
+            var domScript = document.createElement("script");
+            domScript.async = true;
+            domScript.src = moduleName;
+            domScript.addEventListener("load", scriptLoaded, false);
+            document.body.appendChild(domScript);
+          }
+
+          loadScript(debug ? "cocos2d-js.js" : "cocos2d-js-min.js", function () {
+            if (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON) {
+              loadScript(debug ? "physics.js" : "physics-min.js", window.boot);
+            } else {
+              window.boot();
+            }
+          });
+        })();
+      </script>
+</body>
+
+</html>
